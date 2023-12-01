@@ -1,0 +1,59 @@
+package Task1;
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Random random = new Random();
+        int lb = 1;
+        int ub = 10;
+        int maxAttempts = 5;
+        int score = 0;
+        int rounds = 0;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+
+        boolean playAgain = true;
+        while (playAgain) {
+            int targetNumber = random.nextInt(ub - lb + 1) + lb;
+            int attempts = 0;
+            rounds++;
+
+            System.out.println("Computer has generated a number between " + lb+ " and " + ub + ".");
+            System.out.println("You have " + maxAttempts + " attempts to guess it.");
+
+            boolean roundWon = false;
+            while (attempts < maxAttempts) {
+                System.out.print("Enter your guess: ");
+                int userGuess = in.nextInt();
+
+                if (userGuess < lb|| userGuess > ub) {
+                    System.out.println("Your guess is out of the specified range. Try again.");
+                } else if (userGuess < targetNumber) {
+                    System.out.println("Too low! Try again.");
+                } else if (userGuess > targetNumber) {
+                    System.out.println("Too high! Try again.");
+                } else {
+                    System.out.println("Congratulations! You've guessed the correct number: " + targetNumber);
+                    score++;
+                    roundWon = true;
+                    break;
+                }
+
+                attempts++;
+            }
+
+            if (!roundWon) {
+                System.out.println("You've run out of attempts. The correct number was: " + targetNumber);
+            }
+
+            System.out.println("Round " + rounds + " Score: " + score);
+            System.out.print("Do you want to play another round? (yes/no): ");
+            String playAgainResponse = in.next().toLowerCase();
+            playAgain = playAgainResponse.equals("yes");
+        }
+
+        System.out.println("Thanks for playing! Total score: " + score);
+    }
+}
